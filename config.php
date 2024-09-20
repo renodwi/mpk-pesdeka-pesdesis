@@ -1,11 +1,5 @@
 <?php
-$servername = "localhost"; // Nama host server database
-$username = "root"; // Username untuk mengakses database
-$password = ""; // Password untuk mengakses database
-$dbname = "pesdesis_pesdeka"; // Nama database yang akan dihubungkan
-
-// Membuat koneksi
-$conn = new mysqli($servername, $username, $password, $dbname);
+$conn = mysqli_connect("localhost", "u714072416_pemilihan_db", "Pemilihan123", "u714072416_pemilihan_db");
 
 // Memeriksa koneksi
 if ($conn->connect_error) {
