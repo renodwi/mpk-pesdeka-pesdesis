@@ -9,6 +9,9 @@ if(isset($_GET['rndwst']) && $_GET['rndwst'] != '')
     $_SESSION['type'] = $_GET['rndwst'];
 }
 
+if(isset($_GET['rndwst']) && $_GET['rndwst'] !== "pesdesis") $_SESSION['type'] = "unselected";
+else if(isset($_GET['rndwst']) && $_GET['rndwst'] !== "pesdeka") $_SESSION['type'] = "unselected";
+
 if(!isset($_SESSION['nisataunip'])) $_SESSION['nisataunip'] = "kosong";
 ?>
 <!DOCTYPE html>

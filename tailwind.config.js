@@ -5,6 +5,7 @@ module.exports = {
     './admin/*.php',
     './layout/*.php',
     './pages/*.php',
+    './index.html',
     './admin_laleconparticuliere/*.php'
   ],
   theme: {
