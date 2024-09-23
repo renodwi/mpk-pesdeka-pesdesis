@@ -311,4 +311,89 @@
             </table>
         </div>
     </div>
+    <script>
+        var perwakilankelasBtn = document.querySelectorAll('[id^="perwakilankelasBtn_"]');
+
+        perwakilankelasBtn.forEach(function(perwakilankelasBtnResponse) {
+            perwakilankelasBtnResponse.addEventListener("click", function() {
+                var perwakilankelasBtnID = perwakilankelasBtnResponse.id.split('_')[1];
+
+                if(perwakilankelasBtnResponse.classList.contains("bg-red-500"))
+                {
+                    perwakilankelasBtnResponse.classList.remove("bg-red-500");
+
+                    perwakilankelasBtnResponse.classList.add("bg-blue-500");
+
+                    perwakilankelasBtnResponse.innerText = "Perwakilan Kelas";
+
+                    var xhr = new XMLHttpRequest();
+                    xhr.open("POST", "./update_perwakilan_kelas.php", true); 
+                    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                    xhr.send("id_siswa="+perwakilankelasBtnID+"&status=1");
+                }
+                else
+                {
+                    perwakilankelasBtnResponse.classList.add("bg-red-500");
+
+                    perwakilankelasBtnResponse.classList.remove("bg-blue-500");
+
+                    perwakilankelasBtnResponse.innerText = "Bukan Perwakilan Kelas";
+                    
+                    var xhr = new XMLHttpRequest();
+                    xhr.open("POST", "./update_perwakilan_kelas.php", true); 
+                    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                    xhr.send("id_siswa="+perwakilankelasBtnID+"&status=0");
+                }
+            });
+        });
+
+        var resetBtn = document.querySelectorAll('[id^="resetBtn_"]');
+        resetBtn.forEach(function(resetBtnResponse) {
+            resetBtnResponse.addEventListener("click", function() {
+                var resetBtnID = resetBtnResponse.id.split('_')[1];
+                Swal.fire({
+                    title: 'Konfirmasi',
+                    text: "Apakah anda yakin akan mereset data akun ini?",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Ya',
+                    cancelButtonText: 'Batal'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        var xhr = new XMLHttpRequest();
+                        xhr.open("POST", "./reset.php", true); 
+                        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                        xhr.onreadystatechange = function() {
+                            if (xhr.readyState === 4 && xhr.status === 200) {
+                                if(xhr.responseText == "Berhasil")
+                                {
+                                    Swal.fire({
+                                        title: 'Berhasil',
+                                        icon: 'success',
+                                        text: 'Akun berhasil direset'
+                                    });
+                                    setTimeout(() => {
+                                                window.location.href = "./index.php#resetBtn_"+resetBtnID;
+                                            }, 1500);
+                                }
+                                else 
+                                {
+                                    Swal.fire({
+                                        title: 'Error :(',
+                                        icon: 'error',
+                                        text: xhr.responseText
+                                    });
+                                }
+                            }
+                        };
+                        var format = "id="+resetBtnID;
+                        console.log(format);
+                        xhr.send(format);
+                    }
+                });
+            });
+        });
+    </script>
 </body>
